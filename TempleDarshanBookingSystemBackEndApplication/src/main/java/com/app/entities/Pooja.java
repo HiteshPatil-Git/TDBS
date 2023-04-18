@@ -39,15 +39,16 @@ public class Pooja {
 	@Column(length = 20,name = "pooja_slot")
 	private String poojaSlot;
 	
-	/*@OneToOne
+	
+	/*@ManyToOne
 	@JoinColumn(name = "u_id")
 	private User poojaOwner;*/
-	@ManyToOne
-	@JoinColumn(name = "u_id")
-	private User poojaOwner;
+	private int userId;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "temple_id")
-	private Temple temple;
+	private Temple temple;*/
+	
+	private int templeId;
 
 }

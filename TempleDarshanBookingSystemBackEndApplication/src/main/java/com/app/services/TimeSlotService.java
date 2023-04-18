@@ -11,7 +11,8 @@ public interface TimeSlotService {
 
 	List<TimeSlot> getAllTimeSlot();
 
-	TimeSlot addTimeSlotDetails(TimeSlot slotDetails, Integer templeId);
+	List<TimeSlot> addTimeSlotDetails(TimeSlot slotDetails, String slot1, int maxPersonPerSlot1, String slot2, int maxPersonPerSlot2,
+			String slot3, int maxPersonPerSlot3, String slot4, int maxPersonPerSlot4, String templeName);
 
 	TimeSlot getDetailsById(int slotid);
 
@@ -19,7 +20,9 @@ public interface TimeSlotService {
 
 	List<TimeSlot> getAllAvailableTimeSlot();
 
-	List<TimeSlot> getAllByTempleId(int templeId);
+	/*List<TimeSlot> getAllByTempleId(int templeId);*/
+
+	List<TimeSlot> getAllByTempleName(String templeName);
 
 	//List<TimeSlot> getByDateTempleIDSlot(TimeSlot slotDetails, Integer templeId);
 

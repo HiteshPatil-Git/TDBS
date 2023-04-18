@@ -25,43 +25,61 @@ import com.app.repositories.TimeSlotRepository;
 public class TimeSlotImpl implements TimeSlotService{
 	@Autowired
 	private TimeSlotRepository timeSlotRepo;
-	
+
 
 	@Autowired
 	private TempleService templeService;
 
 	@Override
-	public TimeSlot addTimeSlotDetails(TimeSlot slotDetails, Integer templeId) {
+	public List<TimeSlot> addTimeSlotDetails(TimeSlot slotDetails, 
+			String slot1, int maxPersonPerSlot1, String slot2, int maxPersonPerSlot2, 
+			String slot3, int maxPersonPerSlot3, String slot4, int maxPersonPerSlot4, String templeName) {
 		System.out.println("in impl");
 		LocalDate slotDate = slotDetails.getSlotDate();
-		TimeSlot present = timeSlotRepo.findBySlotDateAndTempleId(slotDate, templeId);
-				
+		TimeSlot present = timeSlotRepo.findBySlotDateAndTempleName(slotDate, templeName);
+		System.out.println("ater find by date & templeID");
+
 		if(present == null) {
-			System.out.println("in if loop");
-		Temple temple = templeService.getDetailsByTempleId(templeId);
-		System.out.println("ater temple finding");		
-		int availableSlot1=slotDetails.getMaxPersonPerSlot1();
-		int availableSlot2=slotDetails.getMaxPersonPerSlot2();
-		int availableSlot3=slotDetails.getMaxPersonPerSlot3();
-		int availableSlot4=slotDetails.getMaxPersonPerSlot4();
-		System.out.println("after available slot assigning");
+			System.out.println("in if loop");		
 
-		slotDetails.setAvailableSlot1(availableSlot1);
-		slotDetails.setAvailableSlot2(availableSlot2);
-		slotDetails.setAvailableSlot3(availableSlot3);
-		slotDetails.setAvailableSlot4(availableSlot4);
-		System.out.println("after available slot set");
-		slotDetails.setTempleId(templeId);
-		System.out.println("after atemple ref stted in slotdetail object + before call to repo");
+			List<TimeSlot> timeslots = new ArrayList<>();
 
-		return timeSlotRepo.save(slotDetails);
+			for (int i = 0; i<4 ; i++) {
+				TimeSlot slotDetails1 = new TimeSlot();
+				slotDetails1.setSlotDate(slotDate);
+				slotDetails1.setTempleName(templeName);
+				
+				System.out.println(templeName);
+				if(i==0) {
+					slotDetails1.setSlot(slot1);
+					slotDetails1.setMaxPersonPerSlot(maxPersonPerSlot1);
+					slotDetails1.setAvailableSlot(maxPersonPerSlot1);
+				}else if(i==1) {
+					slotDetails1.setSlot(slot2);
+					slotDetails1.setMaxPersonPerSlot(maxPersonPerSlot2);
+					slotDetails1.setAvailableSlot(maxPersonPerSlot2);
+				}else if(i==2) {
+					slotDetails1.setSlot(slot3);
+					slotDetails1.setMaxPersonPerSlot(maxPersonPerSlot3);
+					slotDetails1.setAvailableSlot(maxPersonPerSlot3);
+				}else if(i==3) {
+					slotDetails1.setSlot(slot4);
+					slotDetails1.setMaxPersonPerSlot(maxPersonPerSlot4);
+					slotDetails1.setAvailableSlot(maxPersonPerSlot4);
+				}
+
+				TimeSlot addedSlot = timeSlotRepo.save(slotDetails1);			
+				timeslots.add(addedSlot);
+
+			}
+
+			return timeslots;
 		}
 		else {
-			return present;
-			
+			return null;
+
 		}
 	}
-
 
 	@Override
 	public List<TimeSlot> getAllTimeSlot() {
@@ -80,7 +98,6 @@ public class TimeSlotImpl implements TimeSlotService{
 	}
 
 
-
 	@Override
 	public TimeSlot getDetailsById(int slotId) {
 		Optional<TimeSlot> slot=timeSlotRepo.findById(slotId);
@@ -97,25 +114,32 @@ public class TimeSlotImpl implements TimeSlotService{
 	}
 
 
-	@Override
+	/*@Override
 	public List<TimeSlot> getAllByTempleId(int templeId) {
 		System.out.println("in IMPL before query");
 		List<TimeSlot> timeSlotList = timeSlotRepo.findByTempleId(templeId);
 		System.out.println("in IMPL after query");
 		return timeSlotList;
-	}
+	}*/
 
+	@Override
+	public List<TimeSlot> getAllByTempleName(String templeName) {
+		System.out.println("in getby templeNAme");
+		List<TimeSlot> timeSlotList = timeSlotRepo.findByTempleName(templeName);
+		
+		return timeSlotList;
+	}
 
 	/*@Override
 	public List<TimeSlot> getByDateTempleIDSlot(TimeSlot slotDetails, Integer templeId) {
 		System.out.println("in IMPL");
 		LocalDate slotDate = slotDetails.getSlotDate();
 		System.out.println("before query");
-		
+
 		String slot1 =  "6AM-8AM";
 		List<TimeSlot> present2 = timeSlotRepo.findBySlotDateAndTempleIdAndSlot1(slotDate, templeId, slot1);
 		System.out.println("after query");
-				
+
 		return present2;
 	}*/
 

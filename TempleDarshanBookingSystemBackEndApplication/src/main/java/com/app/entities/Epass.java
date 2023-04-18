@@ -48,13 +48,16 @@ public class Epass {
   
 	private int peoples;
 
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "u_id")
-	private User user;
+	private User user;*/
 	
-	@ManyToOne
+	private int userId;
+	
+	/*@ManyToOne
 	@JoinColumn(name = "temple_id")
-	private Temple temple;
+	private Temple temple;*/
+	private String templeName;
 	
 	
 	

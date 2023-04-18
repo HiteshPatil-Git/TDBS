@@ -12,7 +12,12 @@ import com.app.entities.User;
 
 
 public interface EpassRepository extends JpaRepository<Epass, Integer> {
+
+	Epass findByPassId(int passId);
+
+	List<Epass> findByUserId(int userId);
+
+	Epass findByPassIdAndTempleName(int passId,  String templeName);
 	
-	List<Epass> findByUser(User user);
-	List<Epass> findByTemple(Temple temple);
+	
 }

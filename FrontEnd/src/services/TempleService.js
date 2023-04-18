@@ -22,7 +22,14 @@ class TempleService{
         return axios.get(TEMPLEADMIN_API_BASE_URL+userId)
     }
     updateTemple(user,templeId){
-        return axios.put(TEMPLEADMIN_API_BASE_URL+templeId,user);
+        return axios.put(TEMPLEADMIN_API_BASE_URL+templeId,user).then(updatedresponse => {
+       
+            if (updatedresponse) {
+                localStorage.setItem("user", JSON.stringify(updatedresponse.data));
+                console.log('In temple service =>' + updatedresponse.data.role);
+            }
+        return updatedresponse;
+        });
     }
 
     makePayment(payment){

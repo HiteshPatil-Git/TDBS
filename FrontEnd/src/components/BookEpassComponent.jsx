@@ -24,14 +24,26 @@ class BookEpassComponent extends Component {
     }
 
     render() {
+        const slotData = window.localStorage.getItem('selectedSlot');
+        const slotresp = JSON.parse(slotData);
+        const userData = window.localStorage.getItem('user');
+        const response = JSON.parse(userData);
+        const templeData = window.localStorage.getItem('selectedTemple');
+        const templeresp = JSON.parse(templeData);
+        console.log('In create timeslot userId =>' + response.userId);
+        console.log('slot Id   =  ' + slotresp.slotId);
+
+        console.log('In BookEpass');
 
         return (
 
             <Formik
                 initialValues={{
-                    passDate: '',
+                    templeName: templeresp.templeName,
+                    passDate: slotresp.slotDate,
+                    slot: slotresp.slot,
+                    available: slotresp.availableSlot,
                     peoples: '',
-                    slot: '6:00AM-8:00AM',
 
                 }}
 
@@ -43,18 +55,17 @@ class BookEpassComponent extends Component {
                     peoples: Yup.number()
                         .required('This field is required')
                         .positive('please Enter valid Number')
-                        .lessThan(100, 'please select Number of peoples between 1 to 100'),
+                        .lessThan(6, 'please select Number of peoples between 1 to 5'),
 
                     slot: Yup.string()
-                        .required('ereq'),
-
-
-
-
+                        .required('Slot required'),
+                    available: Yup.string()
+                        .required('Slot required'),
 
                 })}
 
                 onSubmit={userData => {
+                    console.log('button clicked')
                     emailjs.sendForm('service_flv5uiq', 'template_u56edpm', '.abc', 'user_rwUGjMuz6UWCDzpwVVGPe')
                         .then((result) => {
                             console.log(result.text);
@@ -62,8 +73,18 @@ class BookEpassComponent extends Component {
                             console.log(error.text);
                         });
                     alert('Booking successfull :-)\n\n' + JSON.stringify(userData, null, 4))
-                    EpassService.createEpass(userData).then(res => {
-                        this.props.history.push('/pdf');
+                    EpassService.createEpass(userData, slotresp.slotId, response.userId).then(res => {
+
+                        if (res === null) {
+
+                            this.props.history.push(`/book-Epass`);
+                        }
+                        else {
+                            this.props.history.push('/pdf');
+                        }
+
+
+
                     })
 
                 }}
@@ -71,53 +92,57 @@ class BookEpassComponent extends Component {
 
                 render={({ errors, status, touched }) => (
 
-                    
-                                    <Form className="abc" style={{
-
-                                        marginTop: '100px',
-                                        overflow: 'hidden',
-                                        marginLeft: '300px',
-                                        marginRight: '300px',
-                                        padding: '0',
-
-                                    }}>
-
-                                        <p align="right" >
-                                            <button style={{ marginRight: '10px' }} onClick={this.logout} className="btn btn-primary">Logout</button></p>
-                                        <h3 className="text-center">Book Darshan Slot</h3>
-                                        <div className="form-group">
-                                            <label htmlFor="passDate">First Name</label>
-                                            <Field name="passDate" type="date" className={'form-control' + (errors.passDate && touched.passDate ? ' is-invalid' : '')} />
-                                            <ErrorMessage name="passDate" component="div" className="invalid-feedback" />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="peoples">Number Of Peoples</label>
-                                            <Field name="peoples" type="text" className={'form-control' + (errors.peoples && touched.peoples ? ' is-invalid' : '')} />
-                                            <ErrorMessage name="peoples" component="div" className="invalid-feedback" />
-                                        </div>
 
 
-                                        <div className="form-group">
-                                            <label htmlFor="slot"> slot</label>
-                                            <Field as="select" name="slot" className={'form-control'} >
-                                                <option value="6:00AM-8:00AM" selected>6:00AM-8:00AM</option>
-                                                <option value="8:30AM-10:30AM">8:30AM-10:30AM</option>
-                                                <option value="11:00AM-12PM">11:00AM-12PM</option>
-                                                <option value="2PM:00PM-4:00PM">2PM:00PM-4:00PM</option>
-                                                <option value="4:30PM-6:30PM">4:30PM-6:30PM</option>
-                                                <option value="7:00PM-9:00PM">7:00PM-9:00PM</option>
-                                                <option value="09:30PM-11:30PM">09:30PM-11:30PM</option>
-                                            </Field>
-                                        </div>
+                    <Form className="abc" style={{
 
+                        marginTop: '10px',
+                        overflow: 'hidden',
+                        marginLeft: '200px',
+                        marginRight: '200px',
+                        padding: '0',
 
-                                        <div className="form-group">
-                                            <button type="submit" style={{ marginRight: '20px', marginTop: '12px' }} className="btn btn-primary mr-2">Book</button>
+                    }}>
+                        <h3 className="text-center">Book Darshan Slot</h3>
 
-                                        </div>
-                                    </Form>
-                                
+                        <p align="right" >
+                            <button style={{ marginRight: '20px' }} onClick={this.logout} className="btn btn-primary">Logout</button></p>
+
+                        <div className="form-group">
+                            <label htmlFor="templeName">Temple Name</label>
+                            <Field name="templeName" type="text" className={'form-control' + (errors.templeName && touched.templeName ? ' is-invalid' : '')} readOnly />
+                            <ErrorMessage name="templeName" component="div" className="invalid-feedback" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="passDate">Pass Date</label>
+                            <Field name="passDate" type="date" className={'form-control' + (errors.passDate && touched.passDate ? ' is-invalid' : '')} readOnly />
+                            <ErrorMessage name="passDate" component="div" className="invalid-feedback" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="slot">Slot Timing</label>
+                            <Field name="slot" type="text" className={'form-control' + (errors.slot && touched.slot ? ' is-invalid' : '')} readOnly />
+                            <ErrorMessage name="slot" component="div" className="invalid-feedback" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="available">Available</label>
+                            <Field name="available" type="text" className={'form-control' + (errors.available && touched.available ? ' is-invalid' : '')} readOnly />
+                            <ErrorMessage name="available" component="div" className="invalid-feedback" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="peoples">Number Of Peoples</label>
+                            <Field name="peoples" type="text" className={'form-control' + (errors.peoples && touched.peoples ? ' is-invalid' : '')} placeholder="Max. 5 peoples" />
+                            <ErrorMessage name="peoples" component="div" className="invalid-feedback" />
+                        </div>
+
+                        <div className="form-group">
+                            <button type="submit" style={{ marginRight: '20px', marginTop: '12px' }} className="btn btn-primary mr-2">Confirm Booking</button>
+                            <a style={{ marginRight: '20px', marginTop: '12px' }} class="btn btn-primary" href="/devotee-scope" role="button">Home</a>
+
+                        </div>
+                    </Form>
+
                 )}
             />
         )

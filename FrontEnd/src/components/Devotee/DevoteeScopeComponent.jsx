@@ -10,7 +10,9 @@ import back3 from '../../images/back3.jpg'
 import swastik2 from '../../images/swastik2.jpg'
 import back6 from '../../images/back6.jpg'
 import TempleService from '../../services/TempleService';
+import EpassService from '../../services/EpassService';
 import TimeSlotService from '../../services/TimeSlotService';
+import HeaderComponent from '../HeaderComponent';
 
 class DevoteeScopeComponent extends Component {
     
@@ -39,12 +41,21 @@ class DevoteeScopeComponent extends Component {
            this.props.history.push(`/temple-list`);
         })       
     }
+
+    bookings(userId){
+        console.log('button clicked')
+        EpassService.getPassByUserId(userId).then(res=>{
+           this.props.history.push(`/all-bookings`);
+        })       
+    }
+
     donation(){
         this.props.history.push('/donation');
     }
   
 
     render() {
+        
         const userData=window.localStorage.getItem('user');
         const response=JSON.parse(userData);
         console.log('In Devotee Scope user =>' + response.name);
@@ -54,6 +65,7 @@ class DevoteeScopeComponent extends Component {
         console.log('In Devotee Scope Devotee =>' + devoteeresponse.role);
 
         return (
+            
            <body className="container-fluid"  style={{
             width:'100vw',
             height:'100vh',
@@ -86,7 +98,7 @@ class DevoteeScopeComponent extends Component {
         <button style={{marginRight:'10px'}} onClick={this.logout} className="btn btn-primary">Logout</button></p>
         <div className="row flex-row flex-nowrap" style={{ marginLeft: '0px',  marginTop:'80px',}}>
         
-        <div className="col-3"  style={{   marginLeft: '0px',}}>
+        <div className="col-3"  style={{   marginLeft: '60px',}}>
             <div className="card border border-warning shadow-0 mb-3" style={{maxWidth: "10rem"}}>  <button className="btn btn-primary" onClick={()=>this.updateProfile()}>Update Profile</button>
                 <div >
                     <img  width="150" height="150" src={book3} ></img>
@@ -103,7 +115,7 @@ class DevoteeScopeComponent extends Component {
             </div>
         </div>
         <div className="col-3"  style={{   marginLeft: '0px',}}>
-            <div className="card border border-warning shadow-0 mb-3" style={{maxWidth: "10rem"}}>  <button className="btn btn-primary" onClick={this.donation}>Bookings</button>
+            <div className="card border border-warning shadow-0 mb-3" style={{maxWidth: "10rem"}}>  <button className="btn btn-primary" onClick={() => this.bookings(response.userId)}>Bookings</button>
                 <div >
                     <img  width="150" height="150" src={book2} ></img>
                 </div>

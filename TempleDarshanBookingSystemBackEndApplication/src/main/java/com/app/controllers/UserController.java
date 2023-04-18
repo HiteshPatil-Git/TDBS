@@ -92,9 +92,9 @@ public class UserController {
 	}
 
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody User userDetails){
-		User user=UserService.getDetailsById(id);
+	@PutMapping("/{userId}")
+	public ResponseEntity<?> updateUser(@PathVariable Integer userId, @RequestBody User userDetails){
+		User user=UserService.getDetailsByUserId(userId);
 
 		user.setAddress(userDetails.getAddress());
 		user.setAdharNo(userDetails.getAdharNo());
@@ -118,17 +118,7 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/donation")
-	public List<Donation> getAllDonations(){
-		return DonationService.getAllDonations();
-	}
-
-
-	@GetMapping("/{id}")
-	public Donation getPassById(@PathVariable int id) {
-		return DonationService.getDonationDetailsById(id);
-
-	}
+	
 
 	/*@GetMapping("/{role}")
 	public List<User> getUsersByRole(@PathVariable Role role) {

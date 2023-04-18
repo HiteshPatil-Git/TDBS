@@ -34,7 +34,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	private Integer userId;
 	@Column(length = 30)
 
 	private String name;
@@ -56,7 +56,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	/*@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Epass> userPasses=new ArrayList<>();
 
 
@@ -65,7 +65,7 @@ public class User {
 
 	@OneToMany(mappedBy = "poojaOwner",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Pooja> userPoojas=new ArrayList<>();
-	
+	*/
 	
 	
 	

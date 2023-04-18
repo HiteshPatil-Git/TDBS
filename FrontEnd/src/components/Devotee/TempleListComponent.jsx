@@ -34,13 +34,15 @@ class TempleListComponent extends Component {
         localStorage.clear();
         window.location.href = "/";
     }
-    bookEpass(templeId) {
-        console.log(templeId);
+    bookEpass() {
+        const templeData = window.localStorage.getItem('selectedTemple');
+        const templeresp = JSON.parse(templeData);
+        console.log('temple Id'+templeresp.templeName);
         console.log(this.state.id);
-        TimeSlotService.getSlotByTempleId(templeId).then(
+        TimeSlotService.getSlotByTempleName(templeresp.templeName).then(
             res => {     
-            console.log(res);
-            localStorage.setItem('slotbytemple',JSON.stringify(res.data)) ;
+            console.log('response received ');
+            
             this.props.history.push(`/all-slot`);
                
             }) 
@@ -54,7 +56,7 @@ class TempleListComponent extends Component {
         const userData = window.localStorage.getItem('user');
         const UserDate = JSON.parse(userData);
 
-        let UserId = UserDate.id;
+        let UserId = UserDate.userId;
         console.log('User Id'+UserId)
         this.setState({ id: UserId })
         
@@ -67,13 +69,9 @@ class TempleListComponent extends Component {
             (element) => {
                 return (
                     
-                    
-
-                    <tr>
+                     <tr>
                         <td>{element.templeName}</td>
                         <td>{element.address}</td>
-                        
-                      
                         <td>
                             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                 
@@ -82,7 +80,7 @@ class TempleListComponent extends Component {
                                         Book
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" onClick={() => this.bookEpass(element.templeId)} >Darshan</a></li>
+                                        <li><a class="dropdown-item" onClick={() => this.bookEpass(localStorage.setItem("selectedTemple", JSON.stringify(element)))} >Darshan</a></li>
                                         <li><a class="dropdown-item" href="book-pooja">Pooja</a></li>
                                         <li><a class="dropdown-item" href="donation">Donation</a></li>
                                         

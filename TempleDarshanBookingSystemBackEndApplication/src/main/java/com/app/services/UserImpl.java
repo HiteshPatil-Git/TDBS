@@ -52,8 +52,8 @@ public class UserImpl implements UserService {
 
 
 	@Override
-	public User getDetailsById(int id) {
-		Optional<User> user=UserRepo.findById(id);
+	public User getDetailsByUserId(int userId) {
+		Optional<User> user=UserRepo.findById(userId);
 		User userd=user.orElseThrow(()-> new UserNotFoundExc("id not found"));
 		return userd;
 	

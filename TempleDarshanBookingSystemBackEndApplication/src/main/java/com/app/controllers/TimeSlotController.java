@@ -50,13 +50,25 @@ public class TimeSlotController {
 	
 	
 	
-	@PostMapping("/temple/{templeId}")
-	public ResponseEntity<?> addNewTimeSlot(@RequestBody TimeSlot slotDetails,@PathVariable Integer templeId){
+	@PostMapping("/")
+	public ResponseEntity<?> addNewTimeSlot(@RequestBody TimeSlot slotDetails,
+			@RequestParam(name = "slot1") String slot1, 
+			@RequestParam(name = "maxPersonPerSlot1") int maxPersonPerSlot1,
+			@RequestParam(name = "slot2") String slot2, 
+			@RequestParam(name = "maxPersonPerSlot2") int maxPersonPerSlot2,
+			@RequestParam(name = "slot3") String slot3, 
+			@RequestParam(name = "maxPersonPerSlot3") int maxPersonPerSlot3,
+			@RequestParam(name = "slot4") String slot4, 
+			@RequestParam(name = "maxPersonPerSlot4") int maxPersonPerSlot4,
+			@RequestParam(name = "templeName") String templeName){
 	
 		System.out.println("in add new user"+slotDetails);
 		try {	
+			
+			System.out.println(templeName);
 						
-			return new ResponseEntity<>(timeslotService.addTimeSlotDetails(slotDetails, templeId),HttpStatus.CREATED);
+			return new ResponseEntity<>(timeslotService.addTimeSlotDetails(slotDetails, slot1, maxPersonPerSlot1,slot2, maxPersonPerSlot2,
+					 slot3,  maxPersonPerSlot3,  slot4,  maxPersonPerSlot4, templeName),HttpStatus.CREATED);
 			
 		}catch (RuntimeException e) {
 			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -71,11 +83,16 @@ public class TimeSlotController {
 			return timeslotService.getDetailsById(slotid);
 		
 		}
-		@GetMapping("/temple/{templeId}")
+		/*@GetMapping("/temple/{templeId}")
 		public List<TimeSlot> getSlotByTempleId(@PathVariable int templeId) {
 			System.out.println("in controller");
 			return timeslotService.getAllByTempleId(templeId);
+		}*/
 		
+		@GetMapping("/temple/{templeName}")
+		public List<TimeSlot> getSlotByTempleId(@PathVariable String templeName) {
+			System.out.println("in controller");
+			return timeslotService.getAllByTempleName(templeName);
 		}
 	
 	@DeleteMapping("/{slotId}")

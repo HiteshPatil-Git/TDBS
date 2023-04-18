@@ -28,7 +28,15 @@ return response;
         return axios.get(USER_API_BASE_URL+'/'+userId)
     }
     updateUser(user,userId){
-        return axios.put(USER_API_BASE_URL+ '/' +userId,user);
+        return axios.put(USER_API_BASE_URL+ '/' +userId,user)
+        .then(updatedresponse => {
+       
+            if (updatedresponse) {
+                localStorage.setItem("user", JSON.stringify(updatedresponse.data));
+                console.log('In temple service =>' + updatedresponse.data.role);
+            }
+        return updatedresponse;
+        });
     }
 
     makePayment(payment){

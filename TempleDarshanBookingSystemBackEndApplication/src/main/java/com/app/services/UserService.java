@@ -15,7 +15,7 @@ public interface UserService {
 	
 	User authenticateUser(String email,String password);
 	
-	User getDetailsById(int id);
+	User getDetailsByUserId(int userId);
 
 	//List<User> getUsersByRole(Role role);
 	

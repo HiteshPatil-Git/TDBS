@@ -73,7 +73,7 @@ class LoginPageComponent extends Component {
           else {
             localStorage.setItem("temple", JSON.stringify(res.data));
             console.log('In Login Temple =>' + res.data.role);
-            this.props.history.push('/temple-scope');  
+            this.props.history.push('/temple-scope');
           }
 
         },
@@ -120,18 +120,7 @@ class LoginPageComponent extends Component {
         }}>
 
           <div className="col-md-12" >
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-
-              <div class="btn-group" role="group">
-                <button style={{ marginLeft: '20px', marginTop: '12px' }} type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  SignUp
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="add-devotee">Devotee</a></li>
-                  <li><a class="dropdown-item" href="add-temple">Temple Admin</a></li>
-                </ul>
-              </div>
-            </div>
+            
             <div class="col-md-4" ></div>
 
             <div className="card col-md-6 offset-md-3 offset-md-3" style={{
@@ -184,7 +173,7 @@ class LoginPageComponent extends Component {
                   </div>
 
                   <div className="form-group">
-                    <button style={{ marginRight: '20px', marginTop: '12px' }}
+                    <button style={{ width: "45%" , marginTop: '12px', marginLeft:"15px", marginRight: '15px'}}
                       className="btn btn-primary btn-block"
                       disabled={this.state.loading}>
                       {this.state.loading && (
@@ -192,7 +181,18 @@ class LoginPageComponent extends Component {
                       )}
                       <span>Login</span>
                     </button>
+                    
+                <button style={{ width: "45%", marginTop: '12px', marginLeft:"15px", marginRight: '15px' }} type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  SignUp
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="add-devotee">Devotee</a></li>
+                  <li><a class="dropdown-item" href="add-temple">Temple Admin</a></li>
+                </ul>
+              
                   </div>
+
+                  
 
 
                   {this.state.message && (

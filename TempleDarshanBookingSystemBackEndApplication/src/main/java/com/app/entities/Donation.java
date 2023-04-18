@@ -53,12 +53,15 @@ public class Donation {
 	@JoinColumn(name = "u_id")
 	private User donationOwner;*/
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "u_id")
-	private User donationOwner;
+	private User donationOwner;*/
+	private int userId;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "temple_id")
-	private Temple temple;
+	private Temple temple;*/
+	
+	private int templeId;
 	
 }

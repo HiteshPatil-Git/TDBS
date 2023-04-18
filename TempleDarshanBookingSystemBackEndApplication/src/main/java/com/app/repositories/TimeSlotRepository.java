@@ -2,6 +2,7 @@ package com.app.repositories;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,12 +15,16 @@ import com.app.entities.User;
 
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer>  {
 
-	TimeSlot findBySlotDateAndTempleId(LocalDate slotDate, Integer templeId);
+	
+	List<TimeSlot> findBySlotDateAndTempleNameAndSlot(LocalDate slotDate, String templeName, String slot);
 
-	List<TimeSlot> findByTempleId(int templeId);
+	TimeSlot findBySlotId(int slotId);
+
+	List<TimeSlot> findByTempleName(String templeName);
+
+	TimeSlot findBySlotDateAndTempleName(LocalDate slotDate, String templeName);
+
 	
-	
-	List<TimeSlot> findBySlotDateAndTempleIdAndSlot1(LocalDate slotDate, Integer templeId, String slot1);
 	
 	
 }

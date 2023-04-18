@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import UserService from '../services/UserService';
 import TempleService from '../services/TempleService';
 import TimeSlotService from '../services/TimeSlotService';
-
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
-
 import { parse, isDate } from "date-fns";
-import UpdateUserComponent from './UpdateUserComponent';
+
 const today = new Date();
 function parseDateString(value, originalValue) {
     const parsedDate = isDate(originalValue)
@@ -21,23 +18,23 @@ function parseDateString(value, originalValue) {
 class CreateTimeSlotComponent extends Component {
 
     render() {
-        const userData=window.localStorage.getItem('temple');
+        const userData=window.localStorage.getItem('user');
         const response=JSON.parse(userData);
-        console.log('In create timeslot =>' + response.templeId);
+        console.log('In create timeslot templeId =>' + response.templeId);
 
         return (
             <Formik
                 initialValues={{
                     templeName: response.templeName,
                                        
-                    slot1: '6AM-8AM',
+                    slot1: '6:00AM-8:00AM',
                     slot2: '8:30AM-10:30AM',
                     slot3: '11:00AM-12:00PM',
                     slot4: '2:00PM-4:00PM',
-                    maxPersonPerSlot1: '',
-                    maxPersonPerSlot2: '',
-                    maxPersonPerSlot3: '',
-                    maxPersonPerSlot4: '',
+                    maxPersonPerSlot1: '40',
+                    maxPersonPerSlot2: '40',
+                    maxPersonPerSlot3: '40',
+                    maxPersonPerSlot4: '40',
                     
                 }}
                 validationSchema={Yup.object().shape({
@@ -67,7 +64,7 @@ class CreateTimeSlotComponent extends Component {
 
                 onSubmit={fields => {
                     alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
-                    TimeSlotService.createTimeSlot(fields,response.templeId).then(res => {
+                    TimeSlotService.createTimeSlot(fields, response.templeName).then(res => {
                         this.props.history.push('/temple-scope');
                     })
                 }}
@@ -151,10 +148,13 @@ class CreateTimeSlotComponent extends Component {
 
                         
                         <div className="form-group" style={{ marginRight: '20px', marginTop: '12px' }}>
-                            <button type="submit" style={{ marginRight: '20px' }} className="btn btn-primary mr-2">Register</button>
+                            <button type="submit" style={{ marginRight: '20px', marginTop: '12px' }} className="btn btn-primary mr-2">Register</button>
                             <span>
-                                <button type="reset" className="btn btn-secondary mr-2">Reset</button>
+                                <button style={{ marginRight: '20px', marginTop: '12px' }} type="reset" className="btn btn-secondary mr-2">Reset</button>
                             </span>
+
+                            <a style={{ marginRight: '20px', marginTop: '12px' }} class="btn btn-primary" href="/temple-scope" role="button">Home</a>
+ 
                         </div>
                     </Form>
                 )}

@@ -12,7 +12,6 @@ import com.app.entities.User;
 
 public interface DonationRepository extends JpaRepository<Donation, Integer> {
 	
-	List<Donation> findByDonationOwner(User donationOwner);
-	List<Donation> findByTemple(Temple temple);
+	
 
 }

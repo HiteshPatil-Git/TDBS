@@ -36,7 +36,7 @@ public class Temple {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer templeId;
 	
-	@Column(length = 30)
+	@Column(length = 30, unique = true)
 	private String templeName;
 	
 	@Column(length = 30)
