@@ -66,8 +66,7 @@ class UpdateComponent extends Component {
                                 this.props.history.push('/temple-scope');
                             alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
                             }
-                            
-                        })
+                    })
 
                     }
                     else {
@@ -100,7 +99,7 @@ class UpdateComponent extends Component {
                                  <label htmlFor="Templename">Temple Name</label>
                                 <Field name="templeName" type="text" className={'form-control' + (errors.templeName && touched.templeName ? ' is-invalid' : '')} />
                                 <ErrorMessage name="templeName" component="div" className="invalid-feedback" />
-                            </div>: ''}
+                            </div> : ''}
 
                         <div className="form-group">
                             <label htmlFor="name"> Name</label>
@@ -146,7 +145,7 @@ class UpdateComponent extends Component {
 
 
                         <div className="form-group" style={{ marginRight: '20px', marginTop: '12px' }}>
-                            <button type="submit" style={{ marginRight: '20px', marginTop: '12px' }} className="btn btn-primary mr-2">Register</button>
+                            <button type="submit" style={{ marginRight: '20px', marginTop: '12px' }} className="btn btn-primary mr-2">Update</button>
                             <span>
                                 <button style={{ marginRight: '20px', marginTop: '12px' }} type="reset" className="btn btn-secondary mr-2">Reset</button>
                             </span>

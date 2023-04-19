@@ -29,7 +29,7 @@ public class EpassImpl implements EpassService{
 	public Epass addEPassDetails(Epass u, int slotId, int userId) {
 		
 		TimeSlot selectedSlot = timeSlotRepo.findBySlotId(slotId);
-		if (u.getPeoples()<selectedSlot.getAvailableSlot()) {
+		if (u.getPeoples()<=selectedSlot.getAvailableSlot()) {
 			
 			Epass u1 = new Epass();
 			u1.setPassDate(u.getPassDate());
@@ -93,5 +93,8 @@ System.out.println("In Authenticate Method");
 		return EpassRepo.findByPassIdAndTempleName(passId, templeName);
 		
 	}
+
+
+	
 
 }

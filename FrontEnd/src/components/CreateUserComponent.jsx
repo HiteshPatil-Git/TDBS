@@ -36,7 +36,7 @@ class CreateUserComponent extends Component {
                         .required('Mob No is required'),
 
                         adharNo: Yup.string()
-                        .min(10,'please enter valid adhar number')
+                        .min(12,'please enter valid adhar number')
                         .required('Adhar No is required'),
 
                         address: Yup.string()

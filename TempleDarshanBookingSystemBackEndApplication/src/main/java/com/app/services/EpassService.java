@@ -18,7 +18,7 @@ public interface EpassService {
 
 	List<Epass> getDetailsByUserId(int userId);
 
-	Epass getDetailsByPassId(int passId, String templeName);
+	//Epass getDetailsByPassId(int passId, String templeName);
 
 	Epass authenticateEpass(int passId, String templeName);
 }
